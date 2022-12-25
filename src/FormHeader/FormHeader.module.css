@@ -1,0 +1,13 @@
+.formheader {
+    margin: 60px 0px 30px 0px;
+    border: 1px solid rgb(141, 143, 147);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.formheader > * {
+    margin: 10px;
+}
