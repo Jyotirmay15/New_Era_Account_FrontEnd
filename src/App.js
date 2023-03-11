@@ -14,8 +14,6 @@ function App() {
   const [selectedRow, setSelectedRow] = useState([]);
   const [studentsList, setStudentsList] = useState([]);
 
-  const [imagesList, setImagesList] = useState([]);
-
   const [enableDelete, setEnableDelete] = useState(false);
   const [enableEdit, setEnableEdit] = useState(false);
 
@@ -24,7 +22,7 @@ function App() {
   const getStudents = async () => {
     setIsLoading(true);
     const getStudentsApi = await fetch(
-      "http://localhost:8080/account/students"
+      "http://localhost:8082/account/students"
     );
     const students = await getStudentsApi.json();
 
@@ -32,56 +30,30 @@ function App() {
     setIsLoading(false);
   };
 
-  const getImages = async () => {
-    setIsLoading(true);
-    const getImagesApi = await fetch(
-      "http://localhost:8080/account/images"
-    );
-    const images = await getImagesApi.json();
-
-    setImagesList(images.images);
-    setIsLoading(false);
-  }
-
   useEffect(() => {
     getStudents();
-    // getImages();
   }, []);
 
-  const addStudentEntry = async (entry, imageEntry) => {
+  const addStudentEntry = async (entry) => {
     const postStudentEntryApi = await fetch(
-      "http://localhost:8080/account/students",
+      "http://localhost:8082/account/students",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(entry),
+        body: entry,
       }
     );
     setIsLoading(true);
-    // imageUpload(imageEntry);
     getStudents();
     setIsLoading(false);
   };
 
-  const imageUpload = async (entry) => {
-    const formData = new FormData();
-    formData.append("srNumber", entry.srNumber);
-    formData.append("image", entry.image);
-    const imageUploadApi = await fetch("http://localhost:8080/account/image-upload", {
-      method: "POST",
-      body: formData
-    });
-  }
-
-  const updateStudentEntry = async (student, id) => {
+  const updateStudentEntry = async (student) => {
     setIsLoading(true);
-    const entry = { ...student, _id: id };
     const updateStudentEntryApi = await fetch(
-      "http://localhost:8080/account/edit-student",
+      "http://localhost:8082/account/edit-student",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(entry),
+        body: student,
       }
     );
     getStudents();
@@ -91,7 +63,7 @@ function App() {
   const deleteStudentEntry = async (student) => {
     setIsLoading(true);
     const deleteStudentEntryApi = await fetch(
-      "http://localhost:8080/account/delete-student",
+      "http://localhost:8082/account/delete-student",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -138,7 +110,6 @@ function App() {
         setSelectedRow={setSelectedRow}
         setEnableDelete={setEnableDelete}
         setEnableEdit={setEnableEdit}
-        imagesList={imagesList}
         setStudentsList={setStudentsList}
       />
     </div>

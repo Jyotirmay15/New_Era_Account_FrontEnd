@@ -1,23 +1,16 @@
 import { Typography } from "@mui/material";
 
 import classes from "./StudentsTable.module.css";
-const StudentDetailsPanel = ({ row, imagesList }) => {
+const StudentDetailsPanel = ({ row }) => {
   const data = row.original;
-  // let index;
-
-  // const finalList = imagesList.filter((element, idx) => {
-  //   return element.srNumber === data.srNumber;
-  // });
-
-  // console.log(finalList);
 
   return (
     <div>
-      <Typography>Other Details</Typography>
-
-      {/* {finalList.length > 0 && (
-        <img src={"http://localhost:8080/" + finalList[0].image} />
-      )} */}
+      <Typography>Student Photograph</Typography>
+      <img
+        style={{height: "200px", width: "200px"}}
+        src={"http://localhost:8082/" + data.image}
+      />
       <div className={classes.detailspanel}>
         <Typography>Aadhar Number: {data && data.aadhar}</Typography>
       </div>

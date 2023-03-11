@@ -65,7 +65,7 @@ const StudentsTable = ({
       enableGrouping
       enableColumnResizing
       onRowSelectionChange={setSelectedTableRow}
-      renderDetailPanel={({ row }) => <StudentDetailsPanel row={row}  imagesList={imagesList}/>}
+      renderDetailPanel={({ row }) => <StudentDetailsPanel row={row}  />}
       state={{
         isLoading: isLoading,
         rowSelection: selectedTableRow,

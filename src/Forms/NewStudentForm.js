@@ -30,7 +30,6 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
   const admissionReceivedFeesRef = useRef();
   const admissionPendingFeesRef = useRef();
   const admissionLastPaidDateRef = useRef();
-  const admissionDueDateRef = useRef();
 
   const academicsTotalFeesRef = useRef();
   const academicsReceivedFeesRef = useRef();
@@ -55,44 +54,40 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
       phone: phoneRef.current.value,
       class: classRef.current.value,
       aadhar: aadharRef.current.value,
-      // image: imageInput.current.files[0],
-      fees: {
-        transport: {
-          total: transportTotalFeesRef.current.value,
-          received: transportReceivedFeesRef.current.value,
-          pending: transportPendingFeesRef.current.value,
-          lastPaidDate: transportLastPaidDateRef.current.value,
-          dueDate: transportDueDateRef.current.value,
-        },
-        admission: {
-          total: admissionTotalFeesRef.current.value,
-          received: admissionReceivedFeesRef.current.value,
-          pending: admissionPendingFeesRef.current.value,
-          lastPaidDate: admissionLastPaidDateRef.current.value,
-        },
-        exam: {
-          total: examsTotalFeesRef.current.value,
-          received: examsReceivedFeesRef.current.value,
-          pending: examsPendingFeesRef.current.value,
-          lastPaidDate: examsLastPaidDateRef.current.value,
-          dueDate: examsDueDateRef.current.value,
-        },
-        academics: {
-          total: academicsTotalFeesRef.current.value,
-          received: academicsReceivedFeesRef.current.value,
-          pending: academicsPendingFeesRef.current.value,
-          lastPaidDate: academicsLastPaidDateRef.current.value,
-          dueDate: academicsDueDateRef.current.value,
-        },
-      },
+
+      transportTotal: transportTotalFeesRef.current.value,
+      transportReceived: transportReceivedFeesRef.current.value,
+      transportPending: transportPendingFeesRef.current.value,
+      transportLastPaidDate: transportLastPaidDateRef.current.value,
+      transportDueDate: transportDueDateRef.current.value,
+
+      admissionTotal: admissionTotalFeesRef.current.value,
+      admissionReceived: admissionReceivedFeesRef.current.value,
+      admissionPending: admissionPendingFeesRef.current.value,
+      admissionLastPaidDate: admissionLastPaidDateRef.current.value,
+
+      examTotal: examsTotalFeesRef.current.value,
+      examReceived: examsReceivedFeesRef.current.value,
+      examPending: examsPendingFeesRef.current.value,
+      examLastPaidDate: examsLastPaidDateRef.current.value,
+      examDueDate: examsDueDateRef.current.value,
+
+      academicsTotal: academicsTotalFeesRef.current.value,
+      academicsReceived: academicsReceivedFeesRef.current.value,
+      academicsPending: academicsPendingFeesRef.current.value,
+      academicsLastPaidDate: academicsLastPaidDateRef.current.value,
+      academicsDueDate: academicsDueDateRef.current.value,
+
+      image: imageInput.current.files[0],
     };
 
-    const imageEntry = {
-      srNumber: srnumberRef.current.value,
-      // image: imageInput.current.files[0],
-    };
+    const formData = new FormData();
 
-    addStudentEntry(entry, imageEntry);
+    for (const [key, value] of Object.entries(entry)) {
+      formData.append(key, value);
+    }
+
+    addStudentEntry(formData);
     setOpen(false);
   };
 
@@ -157,14 +152,14 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
               inputRef={aadharRef}
               type="number"
             />
-            {/* <Button
+            <Button
               variant="contained"
               color="primary"
               onClick={() => imageInput.current.click()}
             >
               Upload Image
             </Button>
-            <input ref={imageInput} type="file" style={{ display: "none" }} /> */}
+            <input ref={imageInput} type="file" style={{ display: "none" }} />
           </div>
           <h3 className={classes.h3style}>Academics</h3>
           <div className={classes.formbox}>
