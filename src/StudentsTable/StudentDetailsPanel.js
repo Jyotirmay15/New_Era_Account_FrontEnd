@@ -7,10 +7,11 @@ const StudentDetailsPanel = ({ row }) => {
   return (
     <div>
       <Typography>Student Photograph</Typography>
-      <img
-        style={{height: "200px", width: "200px"}}
-        src={"http://localhost:8082/" + data.image}
-      />
+      <div className={classes.imgsection}>
+        <img
+          src={"http://localhost:8082/" + data.image}
+        />
+      </div>
       <div className={classes.detailspanel}>
         <Typography>Aadhar Number: {data && data.aadhar}</Typography>
       </div>
