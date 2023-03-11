@@ -1,0 +1,25 @@
+.formbox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+  border: 1px solid #f5f3f3;
+  border-radius: 15px;
+}
+
+.formbox > * {
+  margin: 10px !important;
+}
+
+.formsection > * {
+  margin: 5px;
+}
+
+.formhead {
+  background-color: #f5f3f3;
+  color: #1976d2;
+}
+
+.h3style {
+    color: #1976d2;
+}

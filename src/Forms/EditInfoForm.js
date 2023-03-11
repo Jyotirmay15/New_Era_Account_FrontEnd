@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -9,8 +9,15 @@ import {
 } from "@mui/material";
 
 import classes from "./NewStudentForm.module.css";
+import { useRef } from "react";
 
-const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
+const EditInfoForm = ({
+  open,
+  setOpen,
+  data,
+  selectedRow,
+  updateStudentEntry,
+}) => {
   const srnumberRef = useRef("");
   const nameRef = useRef("");
   const parentRef = useRef("");
@@ -18,7 +25,6 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
   const phoneRef = useRef("");
   const classRef = useRef("");
   const aadharRef = useRef("");
-  const imageInput = useRef("");
 
   const transportTotalFeesRef = useRef();
   const transportReceivedFeesRef = useRef();
@@ -55,7 +61,6 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
       phone: phoneRef.current.value,
       class: classRef.current.value,
       aadhar: aadharRef.current.value,
-      // image: imageInput.current.files[0],
       fees: {
         transport: {
           total: transportTotalFeesRef.current.value,
@@ -86,29 +91,26 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
         },
       },
     };
-
-    const imageEntry = {
-      srNumber: srnumberRef.current.value,
-      // image: imageInput.current.files[0],
-    };
-
-    addStudentEntry(entry, imageEntry);
+    const id = selectedRow >= 0 ? data[selectedRow]['_id'] : {};
+    updateStudentEntry(entry, id);
     setOpen(false);
   };
 
+  const editData = selectedRow >= 0 ? data[selectedRow] : {};
+
   return (
     <Dialog
+    fullScreen
       open={open}
       maxWidth="700"
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "center",
       }}
-      fullScreen
     >
       <form onSubmit={handleSubmit}>
         <DialogTitle className={classes.formhead}>
-          {"Student Details"}
+          {"Edit Student Details"}
         </DialogTitle>
         <DialogContent className={classes.formsection}>
           <h3 className={classes.h3style}>Personal Information</h3>
@@ -119,52 +121,50 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
               inputRef={srnumberRef}
               required
               type="number"
+              defaultValue={editData ? editData.srNumber : ""}
             />
             <TextField
               name="first_name"
               label="Name"
               inputRef={nameRef}
               required
+              defaultValue={editData ? editData.name : ""}
             />
             <TextField
               name="parent_name"
               label="Parent Name"
               inputRef={parentRef}
               required
+              defaultValue={editData ? editData.parent : ""}
             />
             <TextField
               name="class"
               label="Class"
               inputRef={classRef}
               required
+              defaultValue={editData ? editData.class : ""}
             />
             <TextField
               name="address"
+              required
               label="Address"
               inputRef={addressRef}
-              required
+              defaultValue={editData ? editData.address : ""}
             />
             <TextField
               name="phone"
+              required
               label="Phone"
               inputRef={phoneRef}
-              required
-              type="number"
+              defaultValue={editData ? editData.phone : ""}
             />
             <TextField
               name="aadhar"
               label="Aadhar Number"
               inputRef={aadharRef}
               type="number"
+              defaultValue={editData ? editData.aadhar : ""}
             />
-            {/* <Button
-              variant="contained"
-              color="primary"
-              onClick={() => imageInput.current.click()}
-            >
-              Upload Image
-            </Button>
-            <input ref={imageInput} type="file" style={{ display: "none" }} /> */}
           </div>
           <h3 className={classes.h3style}>Academics</h3>
           <div className={classes.formbox}>
@@ -172,19 +172,19 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
               label="Total Fees"
               inputRef={academicsTotalFeesRef}
               required
-              type="number"
+              defaultValue={editData ? editData.academicsTotal : ""}
             />
             <TextField
               label="Received Fees"
               inputRef={academicsReceivedFeesRef}
               required
-              type="number"
+              defaultValue={editData ? editData.academicsReceived : ""}
             />
             <TextField
               label="Pending Fees"
               inputRef={academicsPendingFeesRef}
               required
-              type="number"
+              defaultValue={editData ? editData.academicsPending : ""}
             />
             <TextField
               label="Last Paid Date"
@@ -194,6 +194,7 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
                 shrink: true,
               }}
               inputRef={academicsLastPaidDateRef}
+              defaultValue={editData ? editData.academicsLastPaidDate : ""}
             />
             <TextField
               label="Due Date"
@@ -203,6 +204,7 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
                 shrink: true,
               }}
               inputRef={academicsDueDateRef}
+              defaultValue={editData ? editData.academicsDueDate : ""}
             />
           </div>
           <h3 className={classes.h3style}>Transport</h3>
@@ -211,19 +213,19 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
               label="Total Fees"
               inputRef={transportTotalFeesRef}
               required
-              type="number"
+              defaultValue={editData ? editData.transportTotal : ""}
             />
             <TextField
               label="Received Fees"
               inputRef={transportReceivedFeesRef}
               required
-              type="number"
+              defaultValue={editData ? editData.transportReceived : ""}
             />
             <TextField
               label="Pending Fees"
               inputRef={transportPendingFeesRef}
               required
-              type="number"
+              defaultValue={editData ? editData.transportPending : ""}
             />
             <TextField
               label="Last Paid Date"
@@ -233,6 +235,7 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
               }}
               inputRef={transportLastPaidDateRef}
               required
+              defaultValue={editData ? editData.transportLastPaidDate : ""}
             />
             <TextField
               label="Due Date"
@@ -242,6 +245,7 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
               }}
               inputRef={transportDueDateRef}
               required
+              defaultValue={editData ? editData.transportDueDate : ""}
             />
           </div>
           <h3 className={classes.h3style}>Admission</h3>
@@ -250,19 +254,19 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
               label="Total Fees"
               inputRef={admissionTotalFeesRef}
               required
-              type="number"
+              defaultValue={editData ? editData.admissionTotal : ""}
             />
             <TextField
               label="Received Fees"
               inputRef={admissionReceivedFeesRef}
               required
-              type="number"
+              defaultValue={editData ? editData.admissionReceived : ""}
             />
             <TextField
               label="Pending Fees"
               inputRef={admissionPendingFeesRef}
               required
-              type="number"
+              defaultValue={editData ? editData.admissionPending : ""}
             />
             <TextField
               label="Last Paid Date"
@@ -272,6 +276,7 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
               }}
               inputRef={admissionLastPaidDateRef}
               required
+              defaultValue={editData ? editData.admissionLastPaidDate : ""}
             />
           </div>
           <h3 className={classes.h3style}>Exams</h3>
@@ -280,19 +285,19 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
               label="Total Fees"
               inputRef={examsTotalFeesRef}
               required
-              type="number"
+              defaultValue={editData ? editData.examsTotal : ""}
             />
             <TextField
               label="Received Fees"
               inputRef={examsReceivedFeesRef}
               required
-              type="number"
+              defaultValue={editData ? editData.examsReceived : ""}
             />
             <TextField
               label="Pending Fees"
               inputRef={examsPendingFeesRef}
               required
-              type="number"
+              defaultValue={editData ? editData.examsPending : ""}
             />
             <TextField
               label="Last Paid Date"
@@ -300,17 +305,19 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
               InputLabelProps={{
                 shrink: true,
               }}
-              required
               inputRef={examsLastPaidDateRef}
+              required
+              defaultValue={editData ? editData.examsLastPaidDate : ""}
             />
             <TextField
               label="Due Date"
               type="date"
-              required
               InputLabelProps={{
                 shrink: true,
               }}
               inputRef={examsDueDateRef}
+              required
+              defaultValue={editData ? editData.examsDueDate : ""}
             />
           </div>
         </DialogContent>
@@ -333,4 +340,4 @@ const NewStudentForm = ({ open, setOpen, addStudentEntry }) => {
   );
 };
 
-export default NewStudentForm;
+export default EditInfoForm;
