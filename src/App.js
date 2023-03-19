@@ -6,6 +6,7 @@ import StudentsTable from "./StudentsTable/StudentsTable";
 import NewStudentForm from "./Forms/NewStudentForm";
 import DeleteStudents from "./Forms/DeleteStudent";
 import EditInfoForm from "./Forms/EditInfoForm";
+import { StyledEngineProvider } from "@mui/material";
 
 function App() {
   const [openCreateForm, setOpenCreateForm] = useState(false);
@@ -75,44 +76,46 @@ function App() {
   };
 
   return (
-    <div>
-      <Header />
-      <DeleteStudents
-        setOpenDeleteForm={setOpenDeleteForm}
-        open={openDeleteForm}
-        selectedRow={selectedRow}
-        data={studentsList}
-        deleteStudentEntry={deleteStudentEntry}
-      />
-      <FormHeader
-        setOpenCreateForm={setOpenCreateForm}
-        setOpenEditForm={setOpenEditForm}
-        setOpenDeleteForm={setOpenDeleteForm}
-        enableDelete={enableDelete}
-        enableEdit={enableEdit}
-        selectedRow={selectedRow}
-      />
-      <NewStudentForm
-        open={openCreateForm}
-        setOpen={setOpenCreateForm}
-        addStudentEntry={addStudentEntry}
-      />
-      <EditInfoForm
-        open={openEditForm}
-        setOpen={setOpenEditForm}
-        data={studentsList}
-        selectedRow={selectedRow}
-        updateStudentEntry={updateStudentEntry}
-      />
-      <StudentsTable
-        data={studentsList}
-        isLoading={isLoading}
-        setSelectedRow={setSelectedRow}
-        setEnableDelete={setEnableDelete}
-        setEnableEdit={setEnableEdit}
-        setStudentsList={setStudentsList}
-      />
-    </div>
+    <StyledEngineProvider injectFirst>
+      <div>
+        <Header />
+        <DeleteStudents
+          setOpenDeleteForm={setOpenDeleteForm}
+          open={openDeleteForm}
+          selectedRow={selectedRow}
+          data={studentsList}
+          deleteStudentEntry={deleteStudentEntry}
+        />
+        <FormHeader
+          setOpenCreateForm={setOpenCreateForm}
+          setOpenEditForm={setOpenEditForm}
+          setOpenDeleteForm={setOpenDeleteForm}
+          enableDelete={enableDelete}
+          enableEdit={enableEdit}
+          selectedRow={selectedRow}
+        />
+        <NewStudentForm
+          open={openCreateForm}
+          setOpen={setOpenCreateForm}
+          addStudentEntry={addStudentEntry}
+        />
+        <EditInfoForm
+          open={openEditForm}
+          setOpen={setOpenEditForm}
+          data={studentsList}
+          selectedRow={selectedRow}
+          updateStudentEntry={updateStudentEntry}
+        />
+        <StudentsTable
+          data={studentsList}
+          isLoading={isLoading}
+          setSelectedRow={setSelectedRow}
+          setEnableDelete={setEnableDelete}
+          setEnableEdit={setEnableEdit}
+          setStudentsList={setStudentsList}
+        />
+      </div>
+    </StyledEngineProvider>
   );
 }
 
